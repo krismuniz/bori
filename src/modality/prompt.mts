@@ -45,7 +45,7 @@ export const promptModality = {
     await browser.close();
 
     return [
-      `Context: Today is ${currentDateTime}[END]`,
+      `Current Date: Today is ${currentDateTime}[END]`,
       `Instructions: Simplify, cleanup, and summarize the following Text while answering Query if it's a question.[END]`,
       `Question / Instruction / Query: "${truncateString(query, 1024)}"[END]`,
       `Text: ${truncateString(browseResult, 1024)}[END]`,
