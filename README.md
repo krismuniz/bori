@@ -53,15 +53,17 @@ npm run build
 
 # link the project
 npm link
+```
 
-# then, you can run it from anywhere!
+## Usage
+
+```shell
+# you can run it from anywhere (when linked)
 bori "How is the weather in Ponce?"
 
 # or
 bori "Summarize in four bullet points" --url "https://krismuniz.com/about"
 ```
-
-## Usage
 
 Run this command to see the available options.
 
