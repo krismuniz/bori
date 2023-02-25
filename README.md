@@ -1,6 +1,6 @@
 # bori
 
-A simple CLI for sourcing OpenAI's GPT-3 API with browser automation in your terminal.
+A simple CLI for sourcing context for GPT-3 completions with browser automation in your terminal.
 
 ```shell
 Usage: bori [options] <query>
