@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "rimraf ./build && tsc && chmod +x ./build/main.mjs",
-    "execute": "NODE_NO_WARNINGS=1 node build/main.mjs;",
+    "execute": "node --no-warnings build/main.mjs;",
     "start": "npm run build && npm run execute"
   },
   "keywords": [],
@@ -16,7 +16,7 @@
   },
   "license": "MIT",
   "bin": {
-    "bori": "npm run build && NODE_NO_WARNINGS=1 ./build/main.mjs"
+    "bori": "npm run start"
   },
   "devDependencies": {
     "@types/node": "^18.14.0",
