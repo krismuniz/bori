@@ -73,6 +73,12 @@ await createCompletionStream({
   temperature: parseFloat(options.temperature),
   max_tokens: parseInt(options.maxTokens),
   onToken(data) {
+    // prevent printing empty lines at
+    // the beginning of the output
+    if ((response + data).trim() === "") {
+      return;
+    }
+
     process.stdout.write(data);
     response += data;
   },
