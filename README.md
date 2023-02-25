@@ -32,6 +32,8 @@ Your environment needs two environment variables:
 - `CHROME_PATH` - the path to your Chrome executable
 - `OPENAI_API_TOKEN` - your OpenAI API key
 
+> HINT: If you set these in the `.env` file in the project's root directory, the CLI will automatically load them for you! (see the `.env.example` file for an example)
+
 ## Installation
 
 ```shell
