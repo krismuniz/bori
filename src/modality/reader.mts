@@ -1,5 +1,13 @@
 import { Readability } from "@mozilla/readability";
+import path, { dirname } from "path";
 import { Page } from "puppeteer-core";
+
+const DIRNAME = path.dirname(import.meta.url.replace("file://", ""));
+
+const readabilityModulePath = path.join(
+  DIRNAME,
+  "../../node_modules/@mozilla/readability/Readability.js"
+);
 
 export type Reader = (query: string, page: Page) => Promise<string>;
 
@@ -15,7 +23,7 @@ export const readerModality = {
     // install @mozilla/readability
     await page.addScriptTag({
       id: "bori-readability",
-      path: "./node_modules/@mozilla/readability/Readability.js",
+      path: readabilityModulePath,
     });
 
     // parse the document

@@ -19,6 +19,13 @@ export const searchModality = {
 
     return url;
   },
+  duckduckgo: function transformURL(query, url) {
+    if (url === "about:blank") {
+      return `https://duckduckgo.com/?q=${encodeURIComponent(query.trim())}`;
+    }
+
+    return url;
+  },
 } satisfies Record<string, Search>;
 
 export type SearchModality = keyof typeof searchModality;
