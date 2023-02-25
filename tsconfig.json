@@ -1,0 +1,10 @@
+{
+  "include": ["src/**/*.mts"],
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "NodeNext",
+    "outDir": "build",
+    "lib": ["es6", "DOM"],
+    "skipLibCheck": true
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "name": "bori",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "rimraf ./build && tsc",
+    "execute": "NODE_NO_WARNINGS=1 node build/main.mjs",
+    "start": "npm run build && npm run execute"
+  },
+  "keywords": [],
+  "author": {
+    "name": "Kristian Muniz",
+    "email": "contact@krismuniz.com",
+    "url": "https://krismuniz.com"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^18.14.0",
+    "prettier": "^2.8.4",
+    "rimraf": "^4.1.2",
+    "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "@mozilla/readability": "^0.4.2",
+    "@sindresorhus/slugify": "^2.2.0",
+    "commander": "^10.0.0",
+    "dotenv": "^16.0.3",
+    "langchain": "^0.0.11",
+    "puppeteer-core": "^19.7.2",
+    "ts-node": "^10.9.1"
+  }
+}
