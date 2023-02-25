@@ -17,6 +17,38 @@ Options:
   -h, --help                  display help for command
 ```
 
+## Installation
+
+```shell
+git clone git@github.com:krismuniz/bori.git bori
+cd bori
+
+# install dependencies
+npm install
+
+# build the project
+npm run build
+
+# link the project
+npm link
+
+# then, you can run it from anywhere!
+```
+
+```shell
+# run the CLI
+bori "How is the weather in Ponce?"
+
+# or
+bori "Summarize in four bullet points" --url "https://krismuniz.com/about"
+```
+
+```shell
+# to uninstall
+# while in the project directory
+npm unlink .
+```
+
 ## License
 
 [The MIT License (MIT)](https://github.com/krismuniz/minimo/blob/master/LICENSE.md)

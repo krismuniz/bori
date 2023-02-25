@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import * as dotenv from "dotenv";
 import { program } from "commander";
 import { createCompletionStream } from "./openai.mjs";

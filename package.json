@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "rimraf ./build && tsc",
-    "execute": "NODE_NO_WARNINGS=1 node build/main.mjs",
+    "build": "rimraf ./build && tsc && chmod +x ./build/main.mjs",
+    "execute": "NODE_NO_WARNINGS=1 node build/main.mjs;",
     "start": "npm run build && npm run execute"
   },
   "keywords": [],
@@ -15,6 +15,9 @@
     "url": "https://krismuniz.com"
   },
   "license": "MIT",
+  "bin": {
+    "bori": "./build/main.mjs"
+  },
   "devDependencies": {
     "@types/node": "^18.14.0",
     "prettier": "^2.8.4",
