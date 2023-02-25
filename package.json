@@ -16,7 +16,7 @@
   },
   "license": "MIT",
   "bin": {
-    "bori": "./build/main.mjs"
+    "bori": "npm run build && NODE_NO_WARNINGS=1 ./build/main.mjs"
   },
   "devDependencies": {
     "@types/node": "^18.14.0",
