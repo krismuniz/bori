@@ -21,9 +21,10 @@ Options:
 
 - [Node.js](https://nodejs.org/en/) (v19.7.0)
   - Might work with earlier versions, but this is the one I used, so I can't guarantee it will work with earlier versions.
-
-* [OpenAI API Key](https://platform.openai.com/docs/api-reference/authentication)
-* A Chrome executable that supports the [new headless mode](https://developer.chrome.com/blog/headless-chrome/) (e.g. Chrome v59+ on macOS, Chrome v60+ on Windows)
+- [OpenAI API Key](https://platform.openai.com/docs/api-reference/authentication)
+- A Chrome executable that supports the [new headless mode](https://developer.chrome.com/blog/headless-chrome/) (e.g. Chrome v59+ on macOS, Chrome v60+ on Windows)
+  - You can check your Chrome version by going to `chrome://version` in your browser.
+  - You might be able to use other browsers, but I haven't tested it.
 
 ## Setup
 
@@ -34,7 +35,7 @@ Your environment needs two environment variables:
 
 > HINT: If you set these in the `.env` file in the project's root directory, the CLI will automatically load them for you! (see the `.env.example` file for an example)
 
-## Installation
+## Install and Build
 
 ```shell
 # clone the repo
@@ -53,21 +54,31 @@ npm run build
 npm link
 
 # then, you can run it from anywhere!
-```
-
-```shell
-# run the CLI
 bori "How is the weather in Ponce?"
 
 # or
 bori "Summarize in four bullet points" --url "https://krismuniz.com/about"
 ```
 
+## Usage
+
+Run this command to see the available options.
+
+```shell
+bori --help
+```
+
+## Uninstall
+
+Just unlink the project from your global npm modules.
+
 ```shell
 # to uninstall
 # while in the project directory
 npm unlink .
 ```
+
+Then you can delete the project directory and you're good to go!
 
 ## License
 
