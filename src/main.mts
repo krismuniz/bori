@@ -10,6 +10,7 @@ import { existsSync } from "fs";
 import slugify from "@sindresorhus/slugify";
 import { ROOT_PATH } from "./root-path.mjs";
 import path from "path";
+import { encode } from "gpt-3-encoder";
 
 // load .env file
 dotenv.config({
@@ -93,7 +94,12 @@ if (cwd === ROOT_PATH) {
     await mkdir(outputDir);
   }
 
-  await writeFile(`./output/${Date.now()}-${slugify(query)}.txt`, prompt);
+  const encodedPrompt = encode(prompt);
+
+  await writeFile(
+    `./output/${Date.now()}-${slugify(query)}.txt`,
+    [prompt, `[${encodedPrompt.length} tokens]`, response].join("\n")
+  );
 }
 
 process.exit(0);

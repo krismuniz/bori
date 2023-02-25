@@ -29,6 +29,7 @@
     "@sindresorhus/slugify": "^2.2.0",
     "commander": "^10.0.0",
     "dotenv": "^16.0.3",
+    "gpt-3-encoder": "^1.1.4",
     "langchain": "^0.0.11",
     "puppeteer-core": "^19.7.2",
     "ts-node": "^10.9.1"
