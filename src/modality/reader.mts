@@ -14,6 +14,7 @@ export const readerModality = {
   readability: async function browsePage(query, page) {
     // install @mozilla/readability
     await page.addScriptTag({
+      id: "bori-readability",
       path: "./node_modules/@mozilla/readability/Readability.js",
     });
 
@@ -39,9 +40,7 @@ export const readerModality = {
       }
     });
 
-    return [parseResult?.title, parseResult?.textContent.slice(0, 1024)]
-      .join("\n")
-      .trim();
+    return [parseResult?.textContent].join("\n").trim();
   },
 } satisfies Record<string, Reader>;
 

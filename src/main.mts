@@ -43,12 +43,12 @@ program
   .parse(process.argv);
 
 const options: ProgramOptions = program.opts();
-const [query, url] = program.args;
+const [query] = program.args;
 
 const readURL = readerModality[options.reader] ?? readerModality["off"];
 const mapSearchURL = searchModality[options.search] ?? searchModality["google"];
 
-const targetURL = mapSearchURL(query, url ?? "about:blank");
+const targetURL = mapSearchURL(query, options.url ?? "about:blank");
 
 // I'm not making this configurable yet, trying to stay focused.
 const generatePrompt = promptModality["bori-standard"];
@@ -72,9 +72,6 @@ await createCompletionStream({
 });
 
 // TODO: save output to file
-// await writeFile(
-//   `./output/${Date.now()}-${sluggify(query)}.txt`,
-//   prompt + response
-// );
+// await writeFile(`./output/${Date.now()}-${slugify(query)}.txt`, prompt);
 
 process.exit(0);

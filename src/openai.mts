@@ -97,7 +97,7 @@ export async function createCompletionStream(options: {
       temperature: options.temperature ?? 0,
       max_tokens: options.max_tokens ?? 256,
       stream: true,
-      stop: options.stop ?? ["\n\n"],
+      stop: options.stop ?? ["[END]"],
     }),
   });
 
