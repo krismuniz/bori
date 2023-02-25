@@ -1,12 +1,11 @@
 import { Readability } from "@mozilla/readability";
 import path, { dirname } from "path";
 import { Page } from "puppeteer-core";
-
-const DIRNAME = path.dirname(import.meta.url.replace("file://", ""));
+import { ROOT_PATH } from "../root-path.mjs";
 
 const readabilityModulePath = path.join(
-  DIRNAME,
-  "../../node_modules/@mozilla/readability/Readability.js"
+  ROOT_PATH,
+  "./node_modules/@mozilla/readability/Readability.js"
 );
 
 export type Reader = (query: string, page: Page) => Promise<string>;

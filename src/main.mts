@@ -5,9 +5,16 @@ import { createCompletionStream } from "./openai.mjs";
 import { searchModality, SearchModality } from "./modality/search.mjs";
 import { readerModality, ReaderModality } from "./modality/reader.mjs";
 import { promptModality } from "./modality/prompt.mjs";
+import { mkdir, writeFile } from "fs/promises";
+import { existsSync } from "fs";
+import slugify from "@sindresorhus/slugify";
+import { ROOT_PATH } from "./root-path.mjs";
+import path from "path";
 
 // load .env file
-dotenv.config();
+dotenv.config({
+  path: path.join(ROOT_PATH, ".env"),
+});
 
 type ProgramOptions = {
   url?: string;
@@ -71,7 +78,16 @@ await createCompletionStream({
   },
 });
 
-// TODO: save output to file
-// await writeFile(`./output/${Date.now()}-${slugify(query)}.txt`, prompt);
+const cwd = process.cwd();
+if (cwd === ROOT_PATH) {
+  const outputDir = path.join(ROOT_PATH, "./output");
+  const outputDirExists = existsSync(outputDir);
+
+  if (!outputDirExists) {
+    await mkdir(outputDir);
+  }
+
+  await writeFile(`./output/${Date.now()}-${slugify(query)}.txt`, prompt);
+}
 
 process.exit(0);
