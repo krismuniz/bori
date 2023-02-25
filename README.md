@@ -3,7 +3,7 @@
 A simple CLI for sourcing OpenAI's GPT-3 API with browser automation in your terminal.
 
 ```shell
-Usage: main [options] <query>
+Usage: bori [options] <query>
 
 Arguments:
   query                       the query you want to run
@@ -20,7 +20,10 @@ Options:
 ## Installation
 
 ```shell
+# clone the repo
 git clone git@github.com:krismuniz/bori.git bori
+
+# navigate into the project's new directory
 cd bori
 
 # install dependencies
