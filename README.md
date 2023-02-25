@@ -65,7 +65,7 @@ bori "How is the weather in Ponce?"
 bori "Summarize in four bullet points" --url "https://krismuniz.com/about"
 ```
 
-Run this command to see the available options.
+Run with `--help` to see all the options.
 
 ```shell
 bori --help
