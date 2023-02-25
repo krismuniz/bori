@@ -19,7 +19,8 @@ Options:
 
 ## Requirements
 
-- [Node.js](https://nodejs.org/en/) (v19.7.0)
+- [Git](https://git-scm.com/downloads)
+- [Node.js & npm](https://nodejs.org/en/) (v19.7.0)
   - Might work with earlier versions, but this is the one I used, so I can't guarantee it will work with earlier versions.
 - [OpenAI API Key](https://platform.openai.com/docs/api-reference/authentication)
 - A Chrome executable that supports the [new headless mode](https://developer.chrome.com/blog/headless-chrome/) (e.g. Chrome v59+ on macOS, Chrome v60+ on Windows)
@@ -66,6 +67,21 @@ Run this command to see the available options.
 
 ```shell
 bori --help
+```
+
+## Update
+
+If you want to pull the latest changes from the repo, you can do so by running the following commands.
+
+```shell
+# while in the project directory
+git pull
+
+# then, rebuild the project
+npm run build
+
+# and finally, link the project again
+npm link
 ```
 
 ## Uninstall
