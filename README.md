@@ -17,6 +17,21 @@ Options:
   -h, --help                  display help for command
 ```
 
+## Requirements
+
+- [Node.js](https://nodejs.org/en/) (v19.7.0)
+  - Might work with earlier versions, but this is the one I used, so I can't guarantee it will work with earlier versions.
+
+* [OpenAI API Key](https://platform.openai.com/docs/api-reference/authentication)
+* A Chrome executable that supports the [new headless mode](https://developer.chrome.com/blog/headless-chrome/) (e.g. Chrome v59+ on macOS, Chrome v60+ on Windows)
+
+## Setup
+
+Your environment needs two environment variables:
+
+- `CHROME_PATH` - the path to your Chrome executable
+- `OPENAI_API_TOKEN` - your OpenAI API key
+
 ## Installation
 
 ```shell
