@@ -54,6 +54,6 @@ npm unlink .
 
 ## License
 
-[The MIT License (MIT)](https://github.com/krismuniz/minimo/blob/master/LICENSE.md)
+[The MIT License (MIT)](https://github.com/krismuniz/bori/blob/main/LICENSE.md)
 
-Copyright (c) 2018 [Kristian Muñiz](https://www.krismuniz.com)
+Copyright (c) 2023 [Kristian Muñiz](https://www.krismuniz.com)
