@@ -11,6 +11,7 @@ Arguments:
 Options:
   -u, --url <url>             read a specific URL
   -s, --search <engine-name>  search engine name to browse the Web (when no --url is provided) (default: "google")
+  --follow-result             follow first search result in the page
   -r, --reader <reader-name>  strategy to use to browse and read web pages (default: "readability")
   -t, --temperature <number>  temperature setting for Open AI completion (default: "0")
   -m, --max-tokens <number>   max tokens setting for Open AI completion (default: "250")

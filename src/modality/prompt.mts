@@ -4,11 +4,11 @@ import { WithReader } from "./reader.mjs";
 import { getSiteModifier, WithSearch } from "./search.mjs";
 
 type Prompt<T extends object> = (
-  opts: { query: string; url?: string } & T
+  opts: { query: string; url?: string; follow: boolean } & T
 ) => Promise<string>;
 
 export const promptModality = {
-  ["bori-standard"]: async function mapPrompt({ query, url, readURL }) {
+  ["bori-standard"]: async function mapPrompt({ query, url, follow, readURL }) {
     const browser = await puppeteer.launch({
       executablePath: process.env.CHROME_PATH,
       headless: "new",
@@ -31,15 +31,23 @@ export const promptModality = {
     await page.goto(url, { waitUntil: "networkidle2" });
 
     const site = getSiteModifier(query);
-    if (site) {
+    if (site || follow) {
       const links = await page.$$eval(
         "a[href]",
-        async (links, site) =>
+        async (links, site, follow) =>
           links
             .filter((link) => {
               try {
                 const href = new URL(link.href);
-                if (href.hostname.includes(site)) {
+                if (site && href.hostname.includes(site)) {
+                  return true;
+                } else if (
+                  follow &&
+                  // We should not follow links to search engines
+                  !href.hostname.includes("google") &&
+                  !href.hostname.includes("bing") &&
+                  !href.hostname.includes("duckduckgo")
+                ) {
                   return true;
                 }
 
@@ -50,7 +58,8 @@ export const promptModality = {
               }
             })
             .map((l) => l.href),
-        site
+        site,
+        follow
       );
 
       if (links.length > 0) {

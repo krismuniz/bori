@@ -1,5 +1,5 @@
 import { Readability } from "@mozilla/readability";
-import path, { dirname } from "path";
+import path from "path";
 import { Page } from "puppeteer-core";
 import { ROOT_PATH } from "../root-path.mjs";
 

@@ -19,6 +19,7 @@ dotenv.config({
 
 type ProgramOptions = {
   url?: string;
+  followResult?: boolean;
   temperature: string;
   maxTokens: string;
   search: SearchModality;
@@ -33,6 +34,7 @@ program
     "search engine name to browse the Web (when no --url is provided)",
     "google"
   )
+  .option("--follow-result", "follow first search result in the page")
   .option(
     "-r, --reader <reader-name>",
     "strategy to use to browse and read web pages",
@@ -65,6 +67,7 @@ const generatePrompt = promptModality["bori-standard"];
 const prompt = await generatePrompt({
   query,
   url: targetURL,
+  follow: Boolean(options.followResult),
   readURL,
   mapSearchURL,
 });
