@@ -75,6 +75,7 @@ if (encodedPrompt.length > 2048 || encodedPrompt.length > maxTokens * 1.5) {
   console.error(
     `The prompt is too long (${encodedPrompt.length} tokens), please try a shorter query.`
   );
+  console.error(`Here's the prompt:\n`, prompt);
   process.exit(1);
 }
 

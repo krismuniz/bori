@@ -1,5 +1,5 @@
 import puppeteer from "puppeteer-core";
-import { truncateString } from "../truncate.mjs";
+import { truncateString, truncateTokens } from "../truncate.mjs";
 import { WithReader } from "./reader.mjs";
 import { getSiteModifier, WithSearch } from "./search.mjs";
 
@@ -77,7 +77,7 @@ export const promptModality = {
       `Current Date: Today is ${currentDateTime}[END]`,
       `Instructions: Simplify, cleanup, and summarize the following Text while answering Query if it's a question.[END]`,
       `Question / Instruction / Query: "${truncateString(query, 1024)}"[END]`,
-      `Text: ${truncateString(browseResult, 1024)}[END]`,
+      `Text: ${truncateTokens(browseResult, 150)}[END]`,
       "Summary: ",
     ].join("\n");
 
