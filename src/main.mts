@@ -52,6 +52,7 @@ program
 
 const options: ProgramOptions = program.opts();
 const [query] = program.args;
+const maxTokens = parseInt(options.maxTokens);
 
 const readURL = readerModality[options.reader] ?? readerModality["off"];
 const mapSearchURL = searchModality[options.search] ?? searchModality["google"];
@@ -68,11 +69,20 @@ const prompt = await generatePrompt({
   mapSearchURL,
 });
 
+const encodedPrompt = encode(prompt);
+
+if (encodedPrompt.length > 2048 || encodedPrompt.length > maxTokens * 1.5) {
+  console.error(
+    `The prompt is too long (${encodedPrompt.length} tokens), please try a shorter query.`
+  );
+  process.exit(1);
+}
+
 let response = "";
 await createCompletionStream({
   prompt,
   temperature: parseFloat(options.temperature),
-  max_tokens: parseInt(options.maxTokens),
+  max_tokens: maxTokens,
   onToken(data) {
     // prevent printing empty lines at
     // the beginning of the output
@@ -93,8 +103,6 @@ if (cwd === ROOT_PATH) {
   if (!outputDirExists) {
     await mkdir(outputDir);
   }
-
-  const encodedPrompt = encode(prompt);
 
   await writeFile(
     `./output/${Date.now()}-${slugify(query)}.txt`,
