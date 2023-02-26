@@ -1,7 +1,7 @@
 import puppeteer from "puppeteer-core";
 import { truncateString } from "../truncate.mjs";
 import { WithReader } from "./reader.mjs";
-import { WithSearch } from "./search.mjs";
+import { getSiteModifier, WithSearch } from "./search.mjs";
 
 type Prompt<T extends object> = (
   opts: { query: string; url?: string } & T
@@ -29,6 +29,35 @@ export const promptModality = {
     // );
 
     await page.goto(url, { waitUntil: "networkidle2" });
+
+    const site = getSiteModifier(query);
+    if (site) {
+      const links = await page.$$eval(
+        "a[href]",
+        async (links, site) =>
+          links
+            .filter((link) => {
+              try {
+                const href = new URL(link.href);
+                if (href.hostname.includes(site)) {
+                  return true;
+                }
+
+                return false;
+              } catch (e) {
+                console.log(e);
+                return false;
+              }
+            })
+            .map((l) => l.href),
+        site
+      );
+
+      if (links.length > 0) {
+        await page.goto(links[0], { waitUntil: "networkidle2" });
+      }
+    }
+
     await page.setViewport({ width: 1080, height: 1024 });
 
     const currentDateTime = await page.evaluate(() => new Date().toString());

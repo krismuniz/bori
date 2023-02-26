@@ -47,7 +47,17 @@ export const readerModality = {
       }
     });
 
-    return [parseResult?.textContent].join("\n").trim();
+    // collapse all whitespace into a single space/newline
+    const text = parseResult.textContent
+      .replace(/ +/g, " ")
+      .replace(/\t+/g, "\t")
+      .replace(/\n+/g, "\n")
+      .split("\n")
+      .map((line) => line.trim())
+      .filter((line) => line.length > 0)
+      .join("\n");
+
+    return [text].join("\n").trim();
   },
 } satisfies Record<string, Reader>;
 
