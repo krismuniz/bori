@@ -1,6 +1,6 @@
 # bori
 
-A simple CLI for sourcing context for GPT-3 completions with browser automation in your terminal.
+A tool for answering questions about the Web. Often comically.
 
 ```shell
 Usage: bori [options] <query>
@@ -20,7 +20,9 @@ Options:
 
 ## Requirements
 
-- [Git](https://git-scm.com/downloads)
+Before you try it out, you're going to need some tools.
+
+- [git](https://git-scm.com/downloads)
 - [Node.js & npm](https://nodejs.org/en/) (v19.7.0)
   - Might work with earlier versions, but this is the one I used, so I can't guarantee it will work with earlier versions.
 - [OpenAI API Key](https://platform.openai.com/docs/api-reference/authentication)
@@ -56,7 +58,7 @@ npm run build
 npm link
 ```
 
-## Usage
+## How to Use
 
 ```shell
 # you can run it from anywhere (when linked)
@@ -72,9 +74,9 @@ Run with `--help` to see all the options.
 bori --help
 ```
 
-## Update
+## How to Update
 
-If you want to pull the latest changes from the repo, you can do so by running the following commands.
+Stay in sync with my updates with `git pull`
 
 ```shell
 # while in the project directory
@@ -87,9 +89,9 @@ npm run build
 npm link
 ```
 
-## Uninstall
+## How to Uninstall
 
-Just unlink the project from your global npm modules.
+Unlink to uninstall.
 
 ```shell
 # to uninstall
@@ -97,7 +99,9 @@ Just unlink the project from your global npm modules.
 npm unlink .
 ```
 
-Then you can delete the project directory and you're good to go!
+Delete the directory from your file system. Delete it from your trash can. Disconnect your computer now!
+
+Thank you for reading the manual!
 
 ## License
 
