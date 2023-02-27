@@ -2,6 +2,7 @@ import { Readability } from "@mozilla/readability";
 import path from "path";
 import { Page } from "puppeteer-core";
 import { ROOT_PATH } from "../root-path.mjs";
+import { getImportantSentences } from "./utilities/salience.mjs";
 
 const readabilityModulePath = path.join(
   ROOT_PATH,
@@ -57,7 +58,7 @@ export const readerModality = {
       .filter((line) => line.length > 0)
       .join("\n");
 
-    return [text].join("\n").trim();
+    return [getImportantSentences(text, 0.75)].join("\n").trim();
   },
 } satisfies Record<string, Reader>;
 

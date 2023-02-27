@@ -84,9 +84,9 @@ export const promptModality = {
 
     const prompt = [
       `Current Date: Today is ${currentDateTime}[END]`,
-      `Instructions: Simplify, cleanup, and summarize the following Text while answering Query if it's a question.[END]`,
-      `Question / Instruction / Query: "${truncateString(query, 1024)}"[END]`,
-      `Text: ${truncateTokens(browseResult, 150)}[END]`,
+      `Text: ${truncateTokens(browseResult, 200)}[END]`,
+      `General Instructions: Answer Query first IF it's a question, OTHERWISE simplify, cleanup, and summarize Text as Summary.[END]`,
+      `Query Instructions: "${truncateString(query, 1024)}"[END]`,
       "Summary: ",
     ].join("\n");
 
