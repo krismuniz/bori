@@ -83,11 +83,10 @@ export const promptModality = {
     await browser.close();
 
     const prompt = [
-      `Current Date: Today is ${currentDateTime}[END]`,
-      `Text: ${truncateTokens(browseResult, 200)}[END]`,
-      `General Instructions: Answer Query first IF it's a question, OTHERWISE simplify, cleanup, and summarize Text as Summary.[END]`,
-      `Query Instructions: "${truncateString(query, 1024)}"[END]`,
-      "Summary: ",
+      `Context: ${truncateTokens(browseResult, 256)}[END]`,
+      `Today's Date: ${currentDateTime}[END]`,
+      `${truncateTokens(query, 128)} (answer based on the Context above)[END]`,
+      "Result: ",
     ].join("\n");
 
     return prompt;
