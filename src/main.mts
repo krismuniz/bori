@@ -72,7 +72,9 @@ const prompt = await generatePrompt({
   mapSearchURL,
 });
 
-const encodedPrompt = encode(prompt);
+const encodedPrompt = encode(
+  prompt.reduce((acc, { content }) => acc + content, "")
+);
 
 if (encodedPrompt.length > 2048 || encodedPrompt.length > maxTokens * 1.5) {
   console.error(
@@ -84,10 +86,10 @@ if (encodedPrompt.length > 2048 || encodedPrompt.length > maxTokens * 1.5) {
 
 let response = "";
 await createCompletionStream({
-  prompt,
+  messages: prompt,
   temperature: parseFloat(options.temperature),
   max_tokens: maxTokens,
-  onToken(data) {
+  onChange(data) {
     // prevent printing empty lines at
     // the beginning of the output
     if ((response + data).trim() === "") {

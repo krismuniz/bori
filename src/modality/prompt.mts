@@ -1,11 +1,12 @@
 import puppeteer from "puppeteer-core";
+import { ChatMessage } from "../openai.mjs";
 import { truncateString, truncateTokens } from "../truncate.mjs";
 import { WithReader } from "./reader.mjs";
 import { getSiteModifier, WithSearch } from "./search.mjs";
 
 type Prompt<T extends object> = (
   opts: { query: string; url?: string; follow: boolean } & T
-) => Promise<string>;
+) => Promise<ChatMessage[]>;
 
 export const promptModality = {
   ["bori-standard"]: async function mapPrompt({ query, url, follow, readURL }) {
@@ -73,23 +74,33 @@ export const promptModality = {
 
     if (url === "about:blank") {
       return [
-        `Today is ${currentDateTime}`,
-        `Question / Instruction / Query: "${query}"`,
-        "Answer: ",
-      ].join("\n");
+        { role: "system", content: `Today is ${currentDateTime}` },
+        {
+          role: "system",
+          content:
+            "You are an AI that knows how to browse the Web via Text. Answer questions based on the Context above.",
+        },
+        { role: "user", content: query },
+      ];
     }
 
     const browseResult = await readURL(query, page);
     await browser.close();
 
-    const prompt = [
-      `Context: ${truncateTokens(browseResult, 256)}[END]`,
-      `Today's Date: ${currentDateTime}[END]`,
-      `${truncateTokens(query, 128)} (answer based on the Context above)[END]`,
-      "Result: ",
+    const context = [
+      `Context: ${truncateTokens(browseResult, 256)}`,
+      `Today's Date: ${currentDateTime}`,
     ].join("\n");
 
-    return prompt;
+    return [
+      { role: "system", content: context },
+      {
+        role: "system",
+        content:
+          "You are an AI that knows how to browse the Web via Text. Answer questions based on the Context above.",
+      },
+      { role: "user", content: query },
+    ];
   },
 } satisfies Record<string, Prompt<WithReader & WithSearch>>;
 

@@ -1,4 +1,27 @@
-const decoder = new TextDecoder("utf-8");
+export interface ChatCompletion {
+  id: string;
+  object: string;
+  created: number;
+  choices: ChatChoice[];
+  usage: ChatUsage;
+}
+
+export interface ChatChoice {
+  index: number;
+  delta: ChatMessage;
+  finish_reason: "stop" | null;
+}
+
+export interface ChatMessage {
+  role: "assistant" | "user" | "system";
+  content: string;
+}
+
+export interface ChatUsage {
+  prompt_tokens: number;
+  completion_tokens: number;
+  total_tokens: number;
+}
 
 export function tryParseJSON<T = unknown>(text: string, defaultValue: T) {
   try {
@@ -8,83 +31,16 @@ export function tryParseJSON<T = unknown>(text: string, defaultValue: T) {
   }
 }
 
-export const MODELS = ["text-davinci-003", "code-davinci-002"] as const;
-
-export function createCompletion(opts: {
-  token: string;
-  model: (typeof MODELS)[number];
-  temperature: number;
-  max_tokens: number;
-  content: string;
-  stop: string[];
-  onChange: (content: string) => void;
-  onDone: () => void;
-  onError: (error: Error) => void;
-}): Promise<void> {
-  return new Promise((resolve, reject) => {
-    fetch("https://api.openai.com/v1/completions", {
-      method: "POST",
-      headers: {
-        Accept: "text/event-stream",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${opts.token}`,
-      },
-      body: JSON.stringify({
-        model: opts.model,
-        prompt: opts.content,
-        temperature: opts.temperature,
-        max_tokens: opts.max_tokens,
-        stream: true,
-        stop: opts.stop,
-      }),
-    })
-      .then(async (response) => {
-        if (!response.body) {
-          opts.onError(new Error("Response doesn't have a body"));
-          return;
-        }
-
-        const reader = response.body.getReader();
-
-        do {
-          const { done, value } = await reader.read();
-
-          if (done) {
-            opts.onDone();
-            break;
-          }
-
-          const text = decoder.decode(value);
-          const lines = text.split("\n").map((l) => {
-            try {
-              return tryParseJSON(l.replace("data: ", "").trim(), false);
-            } catch (e) {
-              return false;
-            }
-          });
-
-          for (const data of lines.filter(Boolean)) {
-            const choice = data.choices[0];
-            const text = choice.text;
-
-            opts.onChange(text);
-          }
-        } while (true);
-
-        resolve();
-      })
-      .catch((e) => reject(e));
-  });
-}
+export const MODELS = ["gpt-3.5-turbo", "gpt-3.5-turbo-0301"] as const;
 
 export async function createCompletionStream(options: {
-  prompt: string;
+  messages: ChatMessage[];
   temperature?: number;
   max_tokens?: number;
   stop?: string[];
-  onToken: (data: string) => void;
+  onChange: (data: string) => void;
 }) {
-  const response = await fetch("https://api.openai.com/v1/completions", {
+  const response = await fetch("https://api.openai.com/v1/chat/completions", {
     method: "POST",
     headers: {
       Accept: "text/event-stream",
@@ -92,8 +48,8 @@ export async function createCompletionStream(options: {
       Authorization: `Bearer ${process.env.OPENAI_API_TOKEN}`,
     },
     body: JSON.stringify({
-      model: "text-davinci-003",
-      prompt: options.prompt,
+      model: "gpt-3.5-turbo",
+      messages: options.messages,
       temperature: options.temperature ?? 0,
       max_tokens: options.max_tokens ?? 256,
       stream: true,
@@ -116,19 +72,24 @@ export async function createCompletionStream(options: {
     }
 
     const text = decoder.decode(value);
-    const lines = text.split("\n").map((l) => {
+
+    const lines = text.split("\n").map<ChatCompletion | null>((l) => {
       try {
-        return tryParseJSON(l.replace("data: ", "").trim(), false);
+        return tryParseJSON<ChatCompletion | null>(
+          l.replace("data: ", "").trim(),
+          null
+        );
       } catch (e) {
-        return false;
+        console.log(e);
+        return null;
       }
     });
 
     for (const data of lines.filter(Boolean)) {
       const choice = data.choices[0];
-      const text = choice.text;
+      const text = choice.delta.content ?? "";
 
-      options.onToken(text);
+      options.onChange(text);
     }
   } while (true);
 }
