@@ -133,6 +133,6 @@ export function getImportantSentences(text: string, cutoff: number) {
     }))
     .filter((e) => e.weight >= cutoffWeight)
     .slice()
-    .map(({ sentence }) => `- ${sentence}`)
-    .join("\n");
+    .map(({ sentence }) => `${sentence}`)
+    .join("");
 }

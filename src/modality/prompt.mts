@@ -87,17 +87,18 @@ export const promptModality = {
     const browseResult = await readURL(query, page);
     await browser.close();
 
-    const context = [
-      `Context: ${truncateTokens(browseResult, 256)}`,
-      `Today's Date: ${currentDateTime}`,
-    ].join("\n");
+    const context = [`${truncateTokens(browseResult, 256)}`, ``].join("\n");
 
     return [
-      { role: "system", content: context },
       {
         role: "system",
         content:
-          "You are an AI that knows how to browse the Web via Text. Answer questions based on the Context above.",
+          `In ${truncateTokens(
+            url,
+            35
+          )}, this is an excerpt of the content: <web>${context}</web>` +
+          ` User's system date is ${currentDateTime}. Answer questions conversationally, based on` +
+          ` the web content above (do not mention the content).`,
       },
       { role: "user", content: query },
     ];

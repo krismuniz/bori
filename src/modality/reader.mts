@@ -58,7 +58,7 @@ export const readerModality = {
       .filter((line) => line.length > 0)
       .join("\n");
 
-    return [getImportantSentences(text, 0.5)].join("\n").trim();
+    return [getImportantSentences(text, 0)].join("\n").trim();
   },
 } satisfies Record<string, Reader>;
 
