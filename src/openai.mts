@@ -31,7 +31,7 @@ export function tryParseJSON<T = unknown>(text: string, defaultValue: T) {
   }
 }
 
-export const MODELS = ["gpt-3.5-turbo", "gpt-3.5-turbo-0301"] as const;
+export const MODELS = ["gpt-4"] as const;
 
 export async function createCompletionStream(options: {
   messages: ChatMessage[];
@@ -48,7 +48,7 @@ export async function createCompletionStream(options: {
       Authorization: `Bearer ${process.env.OPENAI_API_TOKEN}`,
     },
     body: JSON.stringify({
-      model: "gpt-3.5-turbo",
+      model: "gpt-4",
       messages: options.messages,
       temperature: options.temperature ?? 0,
       max_tokens: options.max_tokens ?? 256,

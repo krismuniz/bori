@@ -48,7 +48,7 @@ program
   .option(
     "-m, --max-tokens <number>",
     "max tokens setting for Open AI completion",
-    "250"
+    "256"
   )
   .parse(process.argv);
 
@@ -76,7 +76,10 @@ const encodedPrompt = encode(
   prompt.reduce((acc, { content }) => acc + content, "")
 );
 
-if (encodedPrompt.length > 2048 || encodedPrompt.length > maxTokens * 1.5) {
+if (
+  encodedPrompt.length > maxTokens ||
+  encodedPrompt.length > maxTokens * 1.5
+) {
   console.error(
     `The prompt is too long (${encodedPrompt.length} tokens), please try a shorter query.`
   );
